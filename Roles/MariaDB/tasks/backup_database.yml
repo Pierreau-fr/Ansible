@@ -1,0 +1,21 @@
+---
+# MariaDB/tasks/backup_database.yml
+
+- name: "Set timestamp of the backup"
+  set_fact:
+    now: "{{ lookup('pipe', 'date +%d%m%Y-%H:%M') }}"
+
+- name: "Create a backup directory"
+  file:
+    path: "/tmp/{{ app_name }}/backups/{{ now }}/"
+    mode: 0777
+    owner: ansible
+    state: directory
+
+- name: Backup the database
+  mysql_db:
+    name: "{{ mariadb_database }}"
+    state: dump
+    login_user: root
+    login_password: "{{ mariadb_root_password }}"
+    target: "/tmp/{{ app_name }}/backups/{{ now }}/{{ backup_file }}"
