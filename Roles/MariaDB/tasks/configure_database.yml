@@ -1,0 +1,25 @@
+---
+# MariaDB/tasks/configure_database.yml
+
+- name: Create {{ mariadb_database }} database
+  mysql_db:
+    name: "{{ mariadb_database }}"
+    state: present
+    login_user: root
+    login_password: "{{ mariadb_root_password }}"
+
+- name: "Copy /files/{{ mariadb_table }} to hosts"
+  copy:
+    src: "{{ role_path }}/files/{{ mariadb_table }}"
+    dest: "/tmp/"
+    owner: "ansible"
+    group: "ansible"
+
+- name: Create {{ mariadb_table }} table in {{ mariadb_database }} database
+  mysql_db:
+    name: "{{ mariadb_database }}"
+    login_user: root
+    login_password: "{{ mariadb_root_password }}"
+    target: "/tmp/{{ mariadb_table }}"
+    state: import
+  notify: restart mariadb
