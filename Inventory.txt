@@ -1,0 +1,26 @@
+AloneServer
+
+[all:vars]
+# 'all' is 'top' parent
+DNS1=192.168.0.254
+DNS2=2606:4700:4700::1111
+DNS3=2606:4700:4700::1001
+DNS4=1.1.1.1
+
+[Containers]
+ansible.alpine ansible_connection=ssh ansible_user=ansible
+ansible.debian
+ansible.rocky
+ansible.suse
+ansible.ubuntu
+
+[France]
+ansible.alpine
+freebsd ansible_host=10.11.12.13
+
+[France:vars]
+timezone= 'Europe/Paris'
+ntp_server=0.fr.pool.ntp.org
+
+[VM]
+Freebsd
