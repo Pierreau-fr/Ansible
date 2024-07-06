@@ -1,0 +1,22 @@
+---
+- name: "uninstall Apache"
+  hosts: ansible.debian
+
+  tasks:
+    - name: "Stop Apache service"
+      become: yes
+      service:
+        name: apache2
+        state: stopped
+
+    - name: "Remove Apache package"
+      become: yes
+      apt:
+        name: "apache2"
+        state: "absent"
+
+    - name: "Delete index.html"
+      become: yes
+      ansible.builtin.file:
+        path: /var/www/html/index.html
+        state: absent
