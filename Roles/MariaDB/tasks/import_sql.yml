@@ -1,0 +1,19 @@
+---
+# MariaDB/tasks/import_sql.yml
+
+- name: "Copy Script.sql"
+  copy:
+    src: "{{ role_path }}/files/{{ sql_script_file }}"
+    dest: "/tmp/"
+    owner: "ansible"
+    group: "ansible"
+
+- name: Import SQL script
+  mysql_db:
+    name: "{{ mariadb_database }}"
+    state: import
+    login_user: root
+    login_password: "{{ mariadb_root_password }}"
+    target: "/tmp/{{ sql_script_file }}"
+      # target: "{{ role_path }}/files/{{ sql_script_file }}"
+  notify: restart mariadb
