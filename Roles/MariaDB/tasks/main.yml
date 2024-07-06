@@ -1,0 +1,8 @@
+---
+# MariaDB/tasks/main.yml
+
+- include_tasks: install_mariadb.yml
+- include_tasks: configure_database.yml
+- include_tasks: import_sql.yml
+- include_tasks: backup_database.yml
+  #- include_tasks: restore_database.yml
