@@ -1,0 +1,7 @@
+---
+# playbook.yml
+- name: Deploy MariaDB
+  hosts: VM
+  become: yes
+  roles:
+    - MariaDB
