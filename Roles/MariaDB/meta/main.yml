@@ -1,0 +1,21 @@
+galaxy_info:
+  author: Pierre ROYER
+  description: Ansible role to deploy and manage MariaDB
+  min_ansible_version: 2.10
+  platforms:
+    - name: RedHat
+      versions:
+        - all
+    - name: Rocky Linux
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+  version: "1.0"
+  license: MIT
+  galaxy_tags: []
+  dependencies: []
