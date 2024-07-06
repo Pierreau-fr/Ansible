@@ -1,0 +1,36 @@
+---
+# MariaDB/tasks/install_mariadb.yml
+
+- name: Install MariaDB on RedHat based systems
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - mariadb-server
+    - mariadb
+    - python3-mysqldb
+  when: (ansible_distribution == "Red Hat Entreprise Linux") or
+        (ansible_distribution == "Rocky")
+
+- name: Install MariaDB on Debian/Ubuntu systems
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - mariadb-server
+    - mariadb-client
+    - python3-mysqldb
+  when: (ansible_distribution == "Ubuntu") or
+        (ansible_distribution == "Debian")
+
+- name: Start and enable MariaDB service
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+
+# mysql_secure_installation
+- name: Remove MySQL test database
+  mysql_db:
+     name: test
+     state: absent
