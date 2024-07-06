@@ -1,0 +1,38 @@
+---
+- name: "Install & start Apache"
+  hosts: ansible.debian
+
+# Les lignes de commentaires commencent par un croisillon
+  tasks:
+    - name: "Apache installation"
+      become: yes
+      apt:
+        name: "apache2"
+        state: "present"
+
+    - name: "start Apache"
+      become: yes
+      service:
+        name: apache2
+        state: started
+        # Activation au boot
+        enabled: yes
+
+# Sauvegarde du fichier distant
+    - name: "Save default file"
+      become: yes
+      copy:
+        remote_src: true
+        src: "/var/www/html/index.html"
+        dest: "/var/www/html/index.html.old"
+        owner: "www-data"
+        group: "www-data"
+
+# index.html est une page web que l’on aura créé dans ~ansible
+    - name: "Copy Homepage"
+      copy:
+        src: "/home/ansible/index.html"
+        dest: "/var/www/html/"
+        owner: "www-data"
+        group: "www-data"
+
