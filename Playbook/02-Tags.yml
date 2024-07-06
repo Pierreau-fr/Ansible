@@ -12,3 +12,7 @@
       tags: "OK"
       debug:
         msg: "Tagé"
+
+# Utilisation :
+# ansible-playbook -i Inventory.txt PB-Tag.yml --tags "OK"
+# ansible-playbook -i Inventory.txt PB-Tag.yml --skip "OK"
